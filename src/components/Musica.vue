@@ -2,10 +2,10 @@
     <main class="base" alt="Imagen de Album">
       <section class="player">
         <div class="img-album"> 
-         <img class="img-portada" v-bind:src="current.img" alt="Imagen de Album" width="200px" height="200px">
+         <img class="img-portada" v-bind:src="cancionesInfo.img" alt="Imagen de Album" width="200px" height="200px">
         </div>
-        <h2 class="song-title">{{ current.title }}</h2>
-        <span class="artist-title">{{ current.artist }}</span>
+        <h2 class="song-title">{{ cancionesInfo.title }}</h2>
+        <span class="artist-title">{{ cancionesInfo.artist }}</span>
         <div class="tiempo">
         <!--<span class="tiempo-inicial">00:00</span>
         <input class="rango_duracion" type="range" id="file" min="1" max="100" value="0" onchange="cambiarDuracion" />
@@ -13,28 +13,27 @@
          <button class="mute" @click="mute"><i :class="[silenciar ? iconoSilencio : iconoSonido]"></i></button>
         </div>
         <div class="control">
-          <button class="prev" @click="prev"><i class="fa-solid fa-angle-left"></i></button>
+          <button class="prev" @click="anterior"><i class="fa-solid fa-angle-left"></i></button>
           <button class="play" v-if="!isPlaying" @click="play"><i class="fa-solid fa-play"></i></button>
           <button class="pause" v-else @click="pause"><i class="fa-solid fa-pause"></i></button>
-          <button class="next" @click="next"><i class="fa-solid fa-angle-right"></i></button>
+          <button class="next" @click="siguiente"><i class="fa-solid fa-angle-right"></i></button>
         </div>
       </section>
       <hr class="division-movil">
       <section class="playlist">
         <h3 class="list-title">Lista de Canciones</h3>
-        <button class="canciones-lista" v-for="song in songs" :key="song.src" @click="play(song)" :class="(song.src == current.src) ? 'song playing' : 'song'">
+        <button class="canciones-lista" v-for="song in songs" :key="song.src" @click="play(song)" :class="(song.src == cancionesInfo.src) ? 'song playing' : 'song'">
           {{ song.title }} - {{ song.artist }}
         </button>
       </section>
     </main>
 </template>
 <script>
-import musica from '../assets/canciones/canciones.json'
 export default {
   name: 'Musica',
   data (){
     return {
-     current: {},
+     cancionesInfo: {},
      index: 0,
      isPlaying: false,
      songs:[
@@ -69,8 +68,7 @@ export default {
          img: require('../assets/img/album-InRainbows.jpg')
        }
      ],
-     canciones: musica,
-     player: new Audio(),
+     audio: new Audio(),
      silenciar: false,
      iconoSilencio: "fa-solid fa-volume-xmark",
      iconoSonido: "fa-solid fa-volume-high",
@@ -79,46 +77,46 @@ export default {
   methods:{
     play: function(song){
       if(typeof song.src != 'undefined'){
-        this.current = song;
-        this.player.src = this.current.src;
+        this.cancionesInfo = song;
+        this.audio.src = this.cancionesInfo.src;
       }
-      this.player.play();
-      this.player.addEventListener('ended', function() {
+      this.audio.play();
+      this.audio.addEventListener('ended', function() {
         this.index++
         if(this.index > this.songs.length - 1){
           this.index = 0;
         }
-      this.current = this.songs[this.index];
-      this.play(this.current);
+      this.cancionesInfo = this.songs[this.index];
+      this.play(this.cancionesInfo);
 
       }.bind(this))
       this.isPlaying = true
     },
     pause: function(){
-      this.player.pause()
+      this.audio.pause()
       this.isPlaying = false;
     },
-    next: function(){
+    siguiente: function(){
       this.index++;
       if(this.index > this.songs.length - 1){
         this.index = 0;
       }
 
-      this.current = this.songs[this.index];
-      this.play(this.current);
+      this.cancionesInfo = this.songs[this.index];
+      this.play(this.cancionesInfo);
     },
-    prev: function(){
+    anterior: function(){
       this.index--;
       if(this.index < 0){
         this.index = this.songs.length -1;
       }
 
-      this.current = this.songs[this.index];
-      this.play(this.current);
-      this.cambiarFondo(this.current.img)
+      this.cancionesInfo = this.songs[this.index];
+      this.play(this.cancionesInfo);
+      this.cambiarFondo(this.cancionesInfo.img)
     },
     mute: function(){
-      this.player.volume !== 0 ? this.player.volume = 0 : this.player.volume = 1;
+      this.audio.volume !== 0 ? this.audio.volume = 0 : this.audio.volume = 1;
       this.silenciar = !this.silenciar;
     },
     cambiarFondo: function(img){
@@ -126,8 +124,8 @@ export default {
     }
   },
   created(){
-    this.current = this.songs[this.index];
-    this.player.src = this.current.src;
+    this.cancionesInfo = this.songs[this.index];
+    this.audio.src = this.cancionesInfo.src;
   }
 }
 </script>
@@ -242,6 +240,7 @@ main::after{
   color: #fff;
   font-size: 20px;
   margin: 10px;
+  cursor: pointer;
 }
 
 .prev, .play, .pause, .next{
