@@ -1,0 +1,31 @@
+[{
+        "title": "Bulletproof...I wish i was",
+        "artist": "RadioHead",
+        "src": "../assets/Radiohead - Bulletproof...I wish i was.mp3",
+        "img": "../assets/img/album-TheBends.jpg"
+    },
+    {
+        "title": "Scatterbrain",
+        "artist": "RadioHead",
+        "src": "../assets/Radiohead - Scatterbrain.mp3",
+        "img": "../assets/img/album-HallToTheThief.jpg"
+    },
+    {
+        "title": "Paranoid Android",
+        "artist": "RadioHead",
+        "src": "../assets/Radiohead - Paranoid Android.mp3",
+        "img": "../assets/img/album-OkComputer.jpg"
+    },
+    {
+        "title": "Exit Music (For a Film)",
+        "artist": "RadioHead",
+        "src": "../assets/Radiohead - Exit Music (For A Film).mp3",
+        "img": "../assets/img/album-OkComputer.jpg"
+    },
+    {
+        "title": "Nude",
+        "artist": "RadioHead",
+        "src": "../assets/Radiohead - Nude.mp3",
+        "img": "../assets/img/album-InRainbows.jpg"
+    }
+]
